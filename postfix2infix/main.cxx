@@ -6,7 +6,7 @@
 
 
 void help(const std::string program_name) {
-    std::cout << "write an expretion as a command line argument:\n"
+    std::cout << "write an expression as a command line argument:\n"
               << program_name << " 'expression'" << std::endl;
 }
 
