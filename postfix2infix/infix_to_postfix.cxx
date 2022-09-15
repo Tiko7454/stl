@@ -32,6 +32,7 @@ std::string infix_to_postfix(const std::string& expr) {
 	    }
 	    if (parantheses == 0) {
                 operands.push(infix_to_postfix(subexpr));
+		subexpr = "";
 		continue;
 	    }
 	    subexpr += ch;
