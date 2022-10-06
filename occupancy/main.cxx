@@ -8,6 +8,8 @@ enum exit_codes {
     INVALID_ARGUMENT
 };
 
+using StringCountMap = std::unordered_map<std::string, std::size_t>;
+
 
 void help(const std::string program_name) {
     std::cout << "write the sentence as a command line argument:\n"
@@ -15,42 +17,59 @@ void help(const std::string program_name) {
 }
 
 
-void push_to_map(
-    const std::string& key,
-    std::unordered_map<std::string, unsigned long long>& map
-) {
-    if (key == "") {
-        return;
-    }
-    if (map.count(key) == 0) {
-        map[key] = 1;
-    } else {
-        map[key]++;
-    }
-}
-
 inline char lower(char ch) {
     return static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
 }
+
+inline bool is_regular_symbol(char ch) {
+    return std::isalpha(ch) or std::isdigit(ch);
+}
+
+class SentenceWordCounter {
+private:
+    StringCountMap _words;
+public:
+    SentenceWordCounter() = default;
+    void process_sentence(const std::string& sentence) {
+        _words.clear();
+        std::string word{};
+        for (char ch : sentence) {
+            if (not is_regular_symbol(ch)) {
+                push_word(word);
+                word = "";
+            } else {
+                word += lower(ch);
+            }
+        }
+        if (word != "") {
+            push_word(word);
+        }
+    }
+
+    void push_word(const std::string& word) {
+        if (word == "") {
+            return;
+        }
+        _words[word]++;
+    }
+
+    auto get_words() -> decltype(_words) {
+        return _words;
+    }
+};
 
 int main(int argc, char** argv) {
     if (argc == 1) {
         help(argv[0]);
         return INVALID_ARGUMENT;
     }
+
     std::string sentence = argv[1];
-    std::unordered_map<std::string, unsigned long long> words{};
-    std::string key{};
-    
-    for (char ch : sentence) {
-        if (not (std::isalpha(ch) or std::isdigit(ch))) {
-            push_to_map(key, words);
-            key = "";
-        } else {
-            key += lower(ch);
-        }
-    }
-    push_to_map(key, words);
+
+    SentenceWordCounter sentence_word_counter{};
+    sentence_word_counter.process_sentence(sentence);
+
+    StringCountMap words = sentence_word_counter.get_words();
 
     for (auto& el : words) {
         std::cout << el.first << " " << el.second << std::endl;
