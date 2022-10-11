@@ -13,6 +13,9 @@ void InfixToPostfixConvertor::_parse() {
     std::string sub_expr{};
     std::size_t parentheses{};
     for (char ch : _expr) {
+        if (ch == ' ') {
+            continue;
+        }
         if (parentheses != 0) {
             parentheses += _add_paren(ch);
             if (parentheses == 0) {
@@ -22,15 +25,8 @@ void InfixToPostfixConvertor::_parse() {
             sub_expr += ch;
             continue;
         }
-        if (not sub_expr.empty()) {
-            // this code is never reached
-            _write_sub_expr(sub_expr);
-        }
 
         if (not is_special_symbol(ch)) {
-            if (ch == ' ') {
-                continue;
-            }
             operand += ch;
             continue;
         }
@@ -56,13 +52,13 @@ void InfixToPostfixConvertor::_parse() {
 
 void InfixToPostfixConvertor::_write_operand(std::string &token) {
     _operands.push(token);
-    token = "";
+    token.clear();
 }
 
 void InfixToPostfixConvertor::_write_sub_expr(std::string &sub_expr) {
     InfixToPostfixConvertor convertor{sub_expr};
     _operands.push(convertor.convert());
-    sub_expr = "";
+    sub_expr.clear();
 }
 
 int InfixToPostfixConvertor::_add_paren(char ch) {
