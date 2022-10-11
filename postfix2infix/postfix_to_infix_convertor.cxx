@@ -37,7 +37,7 @@ std::string PostfixToInfixConvertor::_build_infix() {
 
 std::string PostfixToInfixConvertor::_read_arg() {
     std::string arg = _tokens.top();
-    if (_is_operator(arg)) {
+    if (is_operator(arg)) {
         arg = _build_infix();
     } else {
         _tokens.pop();
