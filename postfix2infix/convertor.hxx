@@ -13,7 +13,7 @@ protected:
         : _expr{expr} {}
 public:
     static bool is_operator(char ch);
-    static bool is_operator(std::string ch);
+    static bool is_operator(const std::string& ch);
     static bool is_special_symbol(char ch) {
         return ch == '(' or ch == ')' or is_operator(ch);
     }
