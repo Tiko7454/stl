@@ -5,9 +5,8 @@ project(postfix_to_infix)
 
 set(SOURCE_EXE main.cxx)
 
-add_library(infix_to_postfix STATIC infix_to_postfix.cxx postfix_to_infix.cxx is_in.cxx)
+add_library(convertors STATIC convertor.cxx infix_to_postfix_convertor.cxx postfix_to_infix_convertor.cxx)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_EXE})
-
-target_link_libraries(${CMAKE_PROJECT_NAME} infix_to_postfix)
+target_link_libraries(${CMAKE_PROJECT_NAME} convertors)
 
