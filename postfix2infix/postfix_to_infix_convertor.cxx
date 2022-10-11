@@ -12,7 +12,7 @@ void PostfixToInfixConvertor::_parse() {
     for (char ch : _expr) {
         if (ch == ' ') {
             _tokens.push(token);
-            token = "";
+            token.clear();
         } else {
             token += ch;
         }

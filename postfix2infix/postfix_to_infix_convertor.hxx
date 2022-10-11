@@ -8,7 +8,7 @@ class PostfixToInfixConvertor : public Convertor {
 private:
     std::stack<std::string> _tokens;
 public:
-    PostfixToInfixConvertor(const std::string expr)
+    PostfixToInfixConvertor(const std::string& expr)
         : Convertor{expr} {}
 
     std::string convert() final;
@@ -24,9 +24,9 @@ private:
     }
 
     std::string _gen_expr(
-            std::string arg1,
-            std::string arg2,
-            std::string op
+            const std::string& arg1,
+            const std::string& arg2,
+            const std::string& op
     ) const {
         return "(" + arg1 + " " + op +
                " " + arg2 + ")";
