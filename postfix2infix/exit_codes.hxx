@@ -1,5 +1,5 @@
-#ifndef EXITCODES_HXX
-#define EXITCODES_HXX
+#ifndef EXIT_CODES_HXX
+#define EXIT_CODES_HXX
 
 enum exit_codes {
     SUCCESS,
